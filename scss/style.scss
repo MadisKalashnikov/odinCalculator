@@ -13,15 +13,26 @@
 		display: grid;
 		grid-template-columns: 300px 100px;
 		border: 1px solid black;
+
+		.display {
+			display: flex;
+			justify-content: flex-end;
+			align-items: flex-end;
+			padding: 10px;
+			#calc-display {
+				font-size: 30px;
+			}
+		}
+
 		button {
 			font-size: 45px;
 			padding: 5px 15px;
 		}
 		&-upper {
 			display: grid;
-			grid-template-columns: 4fr 1fr;
+			grid-template-columns: 300px 100px;
 			grid-column: span 2;
-			height: 100px;
+			height: 80px;
 		}
 		&-right {
 			display: grid;
@@ -32,10 +43,6 @@
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
 			grid-column: 1 / 2;
-
-			#equals {
-				grid-column: 2 / 4;
-			}
 		}
 	}
 }

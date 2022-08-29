@@ -33,6 +33,23 @@ body {
   border: 1px solid black;
 }
 
+.container .calc .display {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  padding: 10px;
+}
+
+.container .calc .display #calc-display {
+  font-size: 30px;
+}
+
 .container .calc button {
   font-size: 45px;
   padding: 5px 15px;
@@ -41,10 +58,10 @@ body {
 .container .calc-upper {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 4fr 1fr;
-      grid-template-columns: 4fr 1fr;
+  -ms-grid-columns: 300px 100px;
+      grid-template-columns: 300px 100px;
   grid-column: span 2;
-  height: 100px;
+  height: 80px;
 }
 
 .container .calc-right {
@@ -66,10 +83,4 @@ body {
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1 / 2;
-}
-
-.container .calc-main #equals {
-  -ms-grid-column: 2;
-  -ms-grid-column-span: 2;
-  grid-column: 2 / 4;
 }
