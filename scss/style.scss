@@ -16,11 +16,18 @@
 
 		.display {
 			display: flex;
+			flex-direction: column;
 			justify-content: flex-end;
 			align-items: flex-end;
 			padding: 10px;
 			#calc-display {
 				font-size: 30px;
+				flex-shrink: 0;
+				flex-grow: 1;
+			}
+			#calc-result {
+				flex-shrink: 1;
+				flex-grow: 0;
 			}
 		}
 
