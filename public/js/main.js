@@ -25,6 +25,9 @@ const numbers = document.querySelectorAll("[data-number]");
 const displayOperand = document.querySelector("#calc-display");
 // set display textcontent based on input values
 const displayNumbers = (e) => {
+	if (displayOperand.textContent === "0") {
+		displayOperand.textContent = ""
+	}
 	const num = e.target.dataset.number;
 	displayOperand.textContent += `${num}`;
 }
@@ -43,23 +46,14 @@ let firstOperand = 0;
 let secondOperand = 0;
 let selectedOperator = "";
 let prevOperator = ""
-let result = 0;
+let result;
 const onOperate = (e) => {
 	// if nothing is inputted
 	if (displayOperand.textContent.length === 0) return;
-	console.log("first log, before storing",selectedOperator)
-	if (selectedOperator === "equals") {
-		result = operate(prevOperator, firstOperand, secondOperand);
-		displayResult.textContent = `${result}`;
-		displayOperand.textContent = "";
-		firstOperand = result;
-		secondOperand = 0;
-		return;
-	}
 	// select operator
+	prevOperator = selectedOperator
 	selectedOperator = e.target.dataset.operator;
-	prevOperator = e.target.dataset.operator;
-	console.log("second log, after storing",selectedOperator)
+	
 	// if first operand = 0, store the value
 	if (firstOperand === 0) {
 		firstOperand = parseInt(displayOperand.textContent);
@@ -71,37 +65,28 @@ const onOperate = (e) => {
 	if (secondOperand === 0) {
 		secondOperand = parseInt(displayOperand.textContent);
 	}
-	// calculate based on selected operator, 
-	switch (selectedOperator) {
-		case "add":
-			result = operate(selectedOperator, firstOperand, secondOperand);
-			displayResult.textContent = `${result}`;
-			displayOperand.textContent = ""
-			firstOperand = result;
-			secondOperand = 0;
-			break;
-		case "substract":
-			result = operate(selectedOperator, firstOperand, secondOperand);
-			displayResult.textContent = `${result}`;
-			displayOperand.textContent = ""
-			firstOperand = result;
-			secondOperand = 0;
-			break;
-		case "multiply":
-			result = operate(selectedOperator, firstOperand, secondOperand);
-			displayResult.textContent = `${result}`;
-			displayOperand.textContent = ""
-			firstOperand = result;
-			secondOperand = 0;
-			break;
-		case "divide":
-			result = operate(selectedOperator, firstOperand, secondOperand)
-			displayResult.textContent = `${result}`;
-			displayOperand.textContent = "";
-			firstOperand = result;
-			secondOperand = 0;
-			break;
+	// if operator = equals, calculate based on previous operator
+	if (selectedOperator === "equals") {
+		if (displayOperand.textContent === "0") return;
+		result = operate(prevOperator, firstOperand, secondOperand);
+		selectedOperator = prevOperator
+		displayResult.textContent = `${result}`;
+		displayOperand.textContent = "0";
+		firstOperand = result;
+		secondOperand = 0;
+		return;
 	}
+	if (result !== 0) {
+		console.log(selectedOperator)
+		if (selectedOperator === "multiply" || selectedOperator === "divide") return;
+		result = operate(selectedOperator, firstOperand, secondOperand);
+		displayResult.textContent = `${result}`;
+		displayOperand.textContent = "0";
+		firstOperand = result;
+		secondOperand = 0;
+		return; 
+	}
+	result = operate(selectedOperator, firstOperand, secondOperand)
 	
 }
 operators.forEach(operator => operator.addEventListener("click", onOperate));
@@ -113,14 +98,14 @@ deleteBtn.addEventListener("click", deleteLastDigit);
 
 // initialize clear button
 const clearBtn = document.querySelector("#clear");
-// clear display text content func
+// clear display inputs
 const clearDisplay = () => {
 	displayOperand.textContent = "";
 	displayResult.textContent = "";
 	selectedOperator = "";
 	firstOperand = 0;
 	secondOperand = 0;
-	result = 0;
+	result = undefined;
 }
 // add onclick clear display func
 clearBtn.addEventListener("click", clearDisplay);
